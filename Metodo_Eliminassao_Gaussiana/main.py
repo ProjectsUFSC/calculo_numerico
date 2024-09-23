@@ -21,7 +21,7 @@ def gauss_elimination(A, b):
         steps.append(np.copy(Ab))
     
     x = np.zeros(n)
-    
+
     for i in range(n - 1, -1, -1):
         x[i] = (Ab[i, -1] - np.sum(Ab[i, i+1:-1] * x[i+1:])) / Ab[i, i]
 
@@ -39,11 +39,6 @@ n = int(input("Digite o número de equações: "))
 A = np.zeros((n, n))
 b = np.zeros(n)
 
-def print_initial_matrix(A, b):
-    Ab = np.hstack([A, b.reshape(-1, 1)])
-    print("\nMatriz inicial aumentada [A|b]:")
-    print(tabulate(np.round(Ab, 4), tablefmt="grid"))
-
 
 print("\nDigite os coeficientes da matriz A:")
 for i in range(n):
@@ -52,9 +47,11 @@ for i in range(n):
 print("\nDigite os coeficientes do vetor b:")
 b = np.array(list(map(float, input("b (separar coeficientes por espaço): ").split())))
 
-try:
+Ab = np.hstack([A, b.reshape(-1, 1)])
+print("\nMatriz inicial aumentada [A|b]:")
+print(tabulate(np.round(Ab, 4), tablefmt="grid"))
 
-    print_initial_matrix(A, b)
+try:
 
     x, steps = gauss_elimination(A, b)
     
