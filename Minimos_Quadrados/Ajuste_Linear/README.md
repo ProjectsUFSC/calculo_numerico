@@ -26,7 +26,7 @@ pip install requirements.txt
 1. Clone este repositório ou copie o arquivo Python para o seu ambiente local.
 2. Execute o programa com:
    ```bash
-   python ajuste_linear.py
+   python main.py
    ```
 
 3. Siga as instruções do programa para fornecer os dados:
