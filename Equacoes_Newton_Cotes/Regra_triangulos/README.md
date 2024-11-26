@@ -1,6 +1,6 @@
 ### `README.md`
 
-# Método dos Retângulos com Ponto Médio
+# Método dos Retângulos
 
 Este projeto implementa o método dos retângulos com ponto médio para aproximar numericamente a integral de uma função contínua \( f(x) \) em um intervalo \([a, b]\). O programa é interativo e exibe uma tabela detalhada com os cálculos intermediários.
 
@@ -41,7 +41,7 @@ Este projeto implementa o método dos retângulos com ponto médio para aproxima
 ## Exemplo de Uso
 
 ```bash
-python metodo_retangulos.py
+python main.py
 ```
 
 ### Exemplo de Entrada
