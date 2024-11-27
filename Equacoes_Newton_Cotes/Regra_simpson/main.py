@@ -1,21 +1,25 @@
 import numpy as np
 from tabulate import tabulate
 
-def rectangle_method(f, a, b, n):
+def simpson_method(f, a, b, n):
+    if n % 2 != 0:
+        raise ValueError("O número de subdivisões (n) deve ser par para a Regra de Simpson.")
     
-    h = (b - a) / n  # Largura de cada retângulo
+    h = (b - a) / n  # Largura de cada subintervalo
     steps = []
     integral = 0
+
+    for i in range(n + 1):
+        x = a + i * h
+        weight = 2 if i % 2 == 0 else 4
+        if i == 0 or i == n:
+            weight = 1
+        term = weight * f(x)
+        integral += term
+        steps.append((i, x, f(x), weight, term, integral))
     
-    for i in range(n):
-        A = (a + h*i)
-        B = (a + h*(i+1))
-        X = (A +  B)/2
-        area = f(X)
-        integral += area
-        steps.append((i + 1, h , A , B , X, f(X), integral))
-    
-    return steps, h*integral
+    integral = integral * (h / 3)
+    return steps, integral
 
 # Entrada da função
 expression = input("\nDigite a função f(x) em termos de 'x': ")
@@ -30,25 +34,24 @@ n = int(input("Digite o número de subdivisões (n): "))
 decimal_places = int(input("\nDigite o número de casas decimais para o arredondamento: "))
 
 try:
-    # Chamada do método dos retângulos
-    steps, integral = rectangle_method(f, a, b, n)
+    # Chamada do método de Simpson
+    steps, integral = simpson_method(f, a, b, n)
     
     # Monta a tabela de resultados
-    headers = ["Iteração", "h", "a'", "b'", "x'", "f(x')", "área"]
+    headers = ["Iteração", "x", "f(x)", "c", "c*f(x)", "Integral"]
     table = [
         [
-            step[0], 
-            f"{step[1]:.{decimal_places}f}", 
-            f"{step[2]:.{decimal_places}f}", 
-            f"{step[3]:.{decimal_places}f}",
+            step[0],
+            f"{step[1]:.{decimal_places}f}",
+            f"{step[2]:.{decimal_places}f}",
+            step[3],
             f"{step[4]:.{decimal_places}f}",
-            f"{step[5]:.{decimal_places}f}",
-            f"{step[6]:.{decimal_places}f}"
+            f"{step[5]:.{decimal_places}f}"
         ] 
         for step in steps
     ]
     
-    print("\nTabela de Cálculo (Método dos Retângulos):")
+    print("\nTabela de Cálculo (Regra de Simpson):")
     print(tabulate(table, headers, tablefmt="grid"))
     
     # Exibe o resultado final
